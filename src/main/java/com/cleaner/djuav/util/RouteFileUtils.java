@@ -150,8 +150,7 @@ public class RouteFileUtils {
         kmlMissionConfig.setTakeOffSecurityHeight("20");
         kmlMissionConfig.setGlobalTransitionalSpeed("15");
         kmlMissionConfig.setGlobalRTHHeight("100");
-        // TODO 参考起飞点配置
-//        kmlMissionConfig.setTakeOffRefPoint(kmlParams.getTakeOffRefPoint());
+        kmlMissionConfig.setTakeOffRefPoint(kmlParams.getTakeOffRefPoint());
         kmlMissionConfig.setDroneInfo(buildKmlDroneInfo(kmlParams.getDroneType(), kmlParams.getSubDroneType()));
         kmlMissionConfig.setPayloadInfo(buildKmlPayloadInfo(kmlParams.getPayloadType(), kmlParams.getPayloadPosition()));
         return kmlMissionConfig;

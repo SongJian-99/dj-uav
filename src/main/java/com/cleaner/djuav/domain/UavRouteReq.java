@@ -73,6 +73,11 @@ public class UavRouteReq implements Serializable {
     private String gimbalPitchMode;
 
     /**
+     * 参考起飞点
+     */
+    private String takeOffRefPoint;
+
+    /**
      * 航点列表
      */
     private List<RoutePointReq> routePointList;

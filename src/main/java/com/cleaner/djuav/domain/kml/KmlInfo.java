@@ -14,7 +14,7 @@ public class KmlInfo {
 
     @XStreamAsAttribute
     @XStreamAlias("xmlns:wpml")
-    private String wpml = "http://www.dji.com/wpmz/1.0.4";
+    private String wpml = "http://www.dji.com/wpmz/1.0.6";
 
     @XStreamAlias("Document")
     private KmlDocument document;

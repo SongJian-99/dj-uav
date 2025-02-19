@@ -42,10 +42,10 @@ public class KmlParams {
      */
     private String exitOnRcLostAction;
 
-//    /**
-//     * 参考起飞点
-//     */
-//    private String takeOffRefPoint;
+    /**
+     * 参考起飞点
+     */
+    private String takeOffRefPoint;
 
     /**
      * 全局航点转弯模式

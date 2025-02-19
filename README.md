@@ -58,33 +58,6 @@
     "waypointTurnMode": "toPointAndStopWithDiscontinuityCurvature"
   },
   "gimbalPitchMode": "usePointSetting",
-//  "mappingTypeReq": {
-//    "collectionMethod": "ortho",
-//    "lensType": "lidar",
-//    "overlapH": 85,
-//    "overlapW": 80,
-//    "elevationOptimizeEnable": 0,
-//    "shootType": "time",
-//    "direction": 100,
-//    "margin": 0,
-//    "coordinates": [
-//      {
-//        "longitude": 113.937386102815,
-//        "latitude": 22.5806023077089,
-//        "height": 0
-//      },
-//      {
-//        "longitude": 113.937625006503,
-//        "latitude": 22.5803738715576,
-//        "height": 0
-//      },
-//      {
-//        "longitude": 113.938017657174,
-//        "latitude": 22.5807302625842,
-//        "height": 0
-//      }
-//    ]
-//  },
   "routePointList": [
     {
       "routePointIndex": 1,
@@ -176,33 +149,6 @@
     "waypointTurnMode": "toPointAndStopWithDiscontinuityCurvature"
   },
   "gimbalPitchMode": "usePointSetting",
-  //  "mappingTypeReq": {
-  //    "collectionMethod": "ortho",
-  //    "lensType": "lidar",
-  //    "overlapH": 85,
-  //    "overlapW": 80,
-  //    "elevationOptimizeEnable": 0,
-  //    "shootType": "time",
-  //    "direction": 100,
-  //    "margin": 0,
-  //    "coordinates": [
-  //      {
-  //        "longitude": 113.937386102815,
-  //        "latitude": 22.5806023077089,
-  //        "height": 0
-  //      },
-  //      {
-  //        "longitude": 113.937625006503,
-  //        "latitude": 22.5803738715576,
-  //        "height": 0
-  //      },
-  //      {
-  //        "longitude": 113.938017657174,
-  //        "latitude": 22.5807302625842,
-  //        "height": 0
-  //      }
-  //    ]
-  //  },
   "routePointList": [
     {
       "routePointIndex": 1,
@@ -230,9 +176,6 @@
 }
 
 ```
-
-## 计划
-1. 完善建图航拍、倾斜摄影、航带飞行模板类型的 KMZ 文件。
 
 ## Star History
 
