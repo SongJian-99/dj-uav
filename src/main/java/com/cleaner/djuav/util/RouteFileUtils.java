@@ -341,7 +341,6 @@ public class RouteFileUtils {
         if (ObjectUtil.isNotEmpty(routePointReq.getHeight())) {
             if (StringUtils.equals(fileType, FileTypeConstants.KML)) {
                 kmlPlacemark.setUseGlobalHeight("0");
-                // TODO 高度转换
                 kmlPlacemark.setEllipsoidHeight(String.valueOf(routePointReq.getHeight()));
                 kmlPlacemark.setHeight(String.valueOf(routePointReq.getHeight()));
             } else if (StringUtils.equals(fileType, FileTypeConstants.WPML)) {
