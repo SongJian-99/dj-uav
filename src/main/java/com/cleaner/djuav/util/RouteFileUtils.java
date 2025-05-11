@@ -386,9 +386,9 @@ public class RouteFileUtils {
         } else {
             kmlWaypointTurnParam.setWaypointTurnMode(waypointTurnMode);
         }
-        if (StringUtils.equals(waypointTurnMode, GlobalWaypointTurnModeEnums.COORDINATE_TURN.getValue()) ||
-                (StringUtils.equals(waypointTurnMode, GlobalWaypointTurnModeEnums.TO_POINT_AND_PASS_WITH_CONTINUITY_CURVATURE.getValue()) &&
-                        ObjectUtil.equals(useStraightLine, 1))) {
+        if ((StringUtils.equals(waypointTurnMode, GlobalWaypointTurnModeEnums.COORDINATE_TURN.getValue()) ||
+                StringUtils.equals(waypointTurnMode, GlobalWaypointTurnModeEnums.TO_POINT_AND_PASS_WITH_CONTINUITY_CURVATURE.getValue())) &&
+                        ObjectUtil.equals(useStraightLine, 1)) {
             kmlWaypointTurnParam.setWaypointTurnDampingDist(String.valueOf(waypointTurnDampingDist));
         }
         return kmlWaypointTurnParam;
