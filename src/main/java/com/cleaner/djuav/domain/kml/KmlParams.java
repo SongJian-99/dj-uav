@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Data
 public class KmlParams {
+
     /**
      * 无人机类型
      */

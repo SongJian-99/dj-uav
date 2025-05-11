@@ -56,6 +56,6 @@ public class RoutePointReq implements Serializable {
     /**
      * 是否首尾航点（首尾航点不能是协调转弯类型）
      */
-    private boolean isStartEndPoint;
+    private Boolean isStartAndEndPoint;
 
 }
