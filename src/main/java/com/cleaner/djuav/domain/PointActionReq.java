@@ -2,11 +2,14 @@ package com.cleaner.djuav.domain;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
 public class PointActionReq implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -1234025611387201652L;
     /**
      * 动作编号
      */
@@ -33,6 +36,11 @@ public class PointActionReq implements Serializable {
     private String imageFormat;
 
     /**
+     * 普通拍照0 全景拍照1
+     */
+    private Integer takePhotoType;
+
+    /**
      * 云台偏航角
      */
     private Double gimbalYawRotateAngle;
@@ -46,5 +54,15 @@ public class PointActionReq implements Serializable {
      * 变焦焦距
      */
     private Double zoom;
+
+    /**
+     * 开始录像
+     */
+    private Boolean startRecord;
+
+    /**
+     * 停止录像
+     */
+    private Boolean stopRecord;
 
 }

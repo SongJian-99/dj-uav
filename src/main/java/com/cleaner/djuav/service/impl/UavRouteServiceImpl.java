@@ -3,32 +3,24 @@ package com.cleaner.djuav.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.cleaner.djuav.constant.FileTypeConstants;
 import com.cleaner.djuav.domain.RoutePointReq;
 import com.cleaner.djuav.domain.UavRouteReq;
 import com.cleaner.djuav.domain.WaypointHeadingReq;
 import com.cleaner.djuav.domain.WaypointTurnReq;
-import com.cleaner.djuav.domain.kml.KmlFolder;
-import com.cleaner.djuav.domain.kml.KmlInfo;
-import com.cleaner.djuav.domain.kml.KmlParams;
-import com.cleaner.djuav.domain.kml.KmlPlacemark;
+import com.cleaner.djuav.domain.kml.*;
 import com.cleaner.djuav.enums.kml.ExitOnRCLostEnums;
-import com.cleaner.djuav.enums.kml.FinishActionEnums;
 import com.cleaner.djuav.service.UavRouteService;
 import com.cleaner.djuav.util.RouteFileUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +34,7 @@ public class UavRouteServiceImpl implements UavRouteService {
     @Override
     public void updateKmz(UavRouteReq uavRouteReq) {
         // TODO 替换本地文件路径！！！
-        File file = FileUtil.file("E:\\IdeaProjects\\dj-uav\\file\\kmz\\航线kmz文件.kmz");
+        File file = FileUtil.file("/Users/songjian/Project/IdeaProjects/dj-uav/file/kmz/航线kmz文件.kmz");
         try (ArchiveInputStream archiveInputStream = new ZipArchiveInputStream(FileUtil.getInputStream(file))) {
             ArchiveEntry entry;
             KmlInfo kmlInfo = new KmlInfo();
@@ -53,10 +45,10 @@ public class UavRouteServiceImpl implements UavRouteService {
                 if (name.toLowerCase().endsWith(".kml")) {
                     kmlInfo = RouteFileUtils.parseKml(archiveInputStream);
                     buildKmlParams(kmlParams, kmlInfo);
-                    handleRouteUpdate(kmlInfo, uavRouteReq, FileTypeConstants.KML, kmlParams);
+                    this.handleRouteUpdate(kmlInfo, uavRouteReq, FileTypeConstants.KML, kmlParams);
                 } else if (name.toLowerCase().endsWith(".wpml")) {
                     wpmlInfo = RouteFileUtils.parseKml(archiveInputStream);
-                    handleRouteUpdate(wpmlInfo, uavRouteReq, FileTypeConstants.WPML, kmlParams);
+                    this.handleRouteUpdate(wpmlInfo, uavRouteReq, FileTypeConstants.WPML, kmlParams);
                 }
             }
             RouteFileUtils.buildKmz("更新航线kmz文件", kmlInfo, wpmlInfo);
@@ -98,7 +90,8 @@ public class UavRouteServiceImpl implements UavRouteService {
         if (CollectionUtil.isNotEmpty(uavRouteReq.getRoutePointList())) {
             List<KmlPlacemark> placemarkList = new ArrayList<>();
             for (RoutePointReq routePointReq : uavRouteReq.getRoutePointList()) {
-                KmlPlacemark kmlPlacemark = RouteFileUtils.buildKmlPlacemark(routePointReq, kmlParams, fileType);
+                RoutePointInfo routePointInfo = BeanUtil.copyProperties(routePointReq, RoutePointInfo.class);
+                KmlPlacemark kmlPlacemark = RouteFileUtils.buildKmlPlacemark(routePointInfo, kmlParams, fileType);
                 placemarkList.add(kmlPlacemark);
             }
             kmlInfo.getDocument().getFolder().setPlacemarkList(placemarkList);
@@ -109,6 +102,7 @@ public class UavRouteServiceImpl implements UavRouteService {
     public void buildKmz(UavRouteReq uavRouteReq) {
         KmlParams kmlParams = new KmlParams();
         BeanUtils.copyProperties(uavRouteReq, kmlParams);
+        kmlParams.setRoutePointList(BeanUtil.copyToList(uavRouteReq.getRoutePointList(), RoutePointInfo.class));
         RouteFileUtils.buildKmz("航线kmz文件", kmlParams);
     }
 }

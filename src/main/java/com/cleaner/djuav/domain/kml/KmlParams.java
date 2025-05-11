@@ -81,6 +81,6 @@ public class KmlParams {
     /**
      * 航点列表
      */
-    private List<RoutePointReq> routePointList;
+    private List<RoutePointInfo> routePointList;
 }
 
