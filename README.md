@@ -2,7 +2,7 @@
 
 
 
-![1941756096460_ pic](https://github.com/user-attachments/assets/e8283bea-a338-4e2e-a50b-b6597844da78)
+![1961757073224_ pic](https://github.com/user-attachments/assets/32b75ea3-8181-46c3-80fd-50e35078841f)
 
 ## 实现效果
 
