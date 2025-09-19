@@ -49,9 +49,9 @@
 * util/RouteFileUtils：生成和解析 KMZ 航线文件的代码都在这个工具类里
 
 ## 接口参数示例
-
-### 生成航线 KMZ 文件
-
+<details>
+  <summary>生成航线 KMZ 文件</summary>
+  
 ```json
 {
   "templateType": "mapping2d",
@@ -189,9 +189,11 @@
 
 
 ```
+</details>
 
-### 编辑航线 KMZ 文件
-
+<details>
+  <summary>编辑航线 KMZ 文件</summary>
+  
 ```json
 {
   "templateType": "mapping2d",
@@ -327,6 +329,7 @@
   ]
 }
 ```
+</details>
 
 ## Star History
 
