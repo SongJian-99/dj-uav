@@ -51,21 +51,6 @@ public class RoutePointReq implements Serializable {
     /**
      * 航点动作列表
      */
-    private List<PointActionReq> actions;
-
-    /**
-     * 等时拍照间隔时间 单位s
-     */
-    private Double timeInterval;
-
-    /**
-     * 等距拍照间隔距离 单位m
-     */
-    private Double distanceInterval;
-
-    /**
-     * 停止间隔拍照航点编号
-     */
-    private Integer endIntervalRouteIndex;
+    private List<ActionGroupReq> actionGroupList;
 
 }

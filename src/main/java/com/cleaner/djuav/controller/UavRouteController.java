@@ -1,7 +1,7 @@
 package com.cleaner.djuav.controller;
 
+import com.cleaner.djuav.domain.KmzInfoVO;
 import com.cleaner.djuav.domain.UavRouteReq;
-import com.cleaner.djuav.domain.kml.KmlInfo;
 import com.cleaner.djuav.service.UavRouteService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +39,7 @@ public class UavRouteController {
      * @param fileUrl
      */
     @PostMapping("/parseKmz")
-    public KmlInfo parseKmz(@RequestParam("fileUrl") String fileUrl) throws IOException {
+    public KmzInfoVO parseKmz(@RequestParam("fileUrl") String fileUrl) throws IOException {
         return this.routeService.parseKmz(fileUrl);
     }
 }

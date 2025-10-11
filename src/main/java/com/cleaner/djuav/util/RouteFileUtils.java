@@ -45,7 +45,7 @@ public class RouteFileUtils {
      */
     public static KmlInfo parseKml(InputStream inputStream) {
         XStream xStream = new XStream();
-        xStream.allowTypes(new Class[]{KmlInfo.class, KmlAction.class, KmlWayLineCoordinateSysParam.class, KmlPoint.class});
+        xStream.allowTypes(new Class[]{KmlInfo.class, KmlAction.class, KmlWayLineCoordinateSysParam.class, KmlPoint.class, KmlActionGroup.class});
         xStream.alias("kml", KmlInfo.class);
         xStream.processAnnotations(KmlInfo.class);
         xStream.autodetectAnnotations(true);
@@ -344,8 +344,12 @@ public class RouteFileUtils {
                 kmlPlacemark.setGimbalPitchAngle(String.valueOf(routePointInfo.getGimbalPitchAngle()));
             }
         }
-        if (CollectionUtil.isNotEmpty(routePointInfo.getActions())) {
-            kmlPlacemark.setActionGroup(buildKmlActionGroup(routePointInfo, kmlParams));
+        if (CollectionUtil.isNotEmpty(routePointInfo.getActionGroupList())) {
+            List<KmlActionGroup> kmlActionGroupList = new ArrayList<>();
+            for (ActionGroupReq actionGroupReq : routePointInfo.getActionGroupList()) {
+                kmlActionGroupList.add(buildKmlActionGroup(actionGroupReq, kmlParams));
+            }
+            kmlPlacemark.setActionGroup(kmlActionGroupList);
         }
         return kmlPlacemark;
     }
@@ -524,26 +528,15 @@ public class RouteFileUtils {
         return kmlWaypointTurnParam;
     }
 
-    public static KmlActionGroup buildKmlActionGroup(RoutePointInfo routePointInfo, KmlParams kmlParams) {
+    public static KmlActionGroup buildKmlActionGroup(ActionGroupReq actionGroupReq, KmlParams kmlParams) {
         KmlActionGroup kmlActionGroup = new KmlActionGroup();
-        kmlActionGroup.setActionGroupId(String.valueOf(routePointInfo.getRoutePointIndex()));
-        kmlActionGroup.setActionGroupStartIndex(String.valueOf(routePointInfo.getRoutePointIndex()));
-        kmlActionGroup.setActionGroupEndIndex(String.valueOf(ObjectUtil.isNotNull(routePointInfo.getEndIntervalRouteIndex()) ?
-                routePointInfo.getEndIntervalRouteIndex() : routePointInfo.getRoutePointIndex()));
+        kmlActionGroup.setActionGroupId(String.valueOf(actionGroupReq.getActionGroupId()));
+        kmlActionGroup.setActionGroupStartIndex(String.valueOf(actionGroupReq.getActionGroupStartIndex()));
+        kmlActionGroup.setActionGroupEndIndex(String.valueOf(actionGroupReq.getActionGroupEndIndex()));
         kmlActionGroup.setActionGroupMode(ActionGroupModeEnums.SEQUENCE.getValue());
 
-        String actionTriggerType = ActionTriggerTypeEnums.REACH_POINT.getValue();
-        Double actionTriggerParam = 0.0;
-        if (ObjectUtil.isNotNull(routePointInfo.getTimeInterval())) {
-            actionTriggerType = ActionTriggerTypeEnums.MULTIPLE_TIMING.getValue();
-            actionTriggerParam = routePointInfo.getTimeInterval();
-        } else if (ObjectUtil.isNotNull(routePointInfo.getDistanceInterval())) {
-            actionTriggerType = ActionTriggerTypeEnums.MULTIPLE_DISTANCE.getValue();
-            actionTriggerParam = routePointInfo.getDistanceInterval();
-        }
-
-        kmlActionGroup.setActionTrigger(buildKmlActionTrigger(actionTriggerType, actionTriggerParam));
-        kmlActionGroup.setAction(getKmlActionList(routePointInfo.getActions(), kmlParams));
+        kmlActionGroup.setActionTrigger(buildKmlActionTrigger(actionGroupReq.getActionTriggerType(), actionGroupReq.getActionTriggerParam()));
+        kmlActionGroup.setAction(getKmlActionList(actionGroupReq.getActions(), kmlParams));
         return kmlActionGroup;
     }
 

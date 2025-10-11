@@ -1,7 +1,7 @@
 package com.cleaner.djuav.service;
 
+import com.cleaner.djuav.domain.KmzInfoVO;
 import com.cleaner.djuav.domain.UavRouteReq;
-import com.cleaner.djuav.domain.kml.KmlInfo;
 
 import java.io.IOException;
 
@@ -22,5 +22,5 @@ public interface UavRouteService {
      *
      * @param file
      */
-    KmlInfo parseKmz(String file) throws IOException;
+    KmzInfoVO parseKmz(String file) throws IOException;
 }

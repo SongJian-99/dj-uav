@@ -3,15 +3,12 @@ package com.cleaner.djuav.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.cleaner.djuav.constant.FileTypeConstants;
-import com.cleaner.djuav.domain.RoutePointReq;
-import com.cleaner.djuav.domain.UavRouteReq;
-import com.cleaner.djuav.domain.WaypointHeadingReq;
-import com.cleaner.djuav.domain.WaypointTurnReq;
+import com.cleaner.djuav.domain.*;
 import com.cleaner.djuav.domain.kml.*;
 import com.cleaner.djuav.enums.kml.ExitOnRCLostEnums;
 import com.cleaner.djuav.service.UavRouteService;
-import com.cleaner.djuav.util.FileUtils;
 import com.cleaner.djuav.util.RouteFileUtils;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -36,7 +33,7 @@ public class UavRouteServiceImpl implements UavRouteService {
     @Override
     public void updateKmz(UavRouteReq uavRouteReq) {
         // TODO 替换本地文件路径！！！
-        File file = FileUtil.file("/Users/Cleaner/Project/IdeaProjects/dj-uav/file/kmz/航线kmz文件.kmz");
+        File file = FileUtil.file("/Users/songjian/Project/IdeaProjects/dj-uav/file/kmz/航线kmz文件.kmz");
         try (ArchiveInputStream archiveInputStream = new ZipArchiveInputStream(FileUtil.getInputStream(file))) {
             ArchiveEntry entry;
             KmlInfo kmlInfo = new KmlInfo();
@@ -64,12 +61,15 @@ public class UavRouteServiceImpl implements UavRouteService {
         kmlParams.setGlobalHeight(Double.valueOf(kmlInfo.getDocument().getKmlMissionConfig().getGlobalRTHHeight()));
         kmlParams.setAutoFlightSpeed(Double.valueOf(folder.getAutoFlightSpeed()));
 
-        WaypointHeadingReq waypointHeadingReq = new WaypointHeadingReq();
-        waypointHeadingReq.setWaypointHeadingMode(folder.getGlobalWaypointHeadingParam().getWaypointHeadingMode());
-        waypointHeadingReq.setWaypointHeadingAngle(StringUtils.isNotBlank(folder.getGlobalWaypointHeadingParam().getWaypointHeadingAngle()) ?
-                Double.valueOf(folder.getGlobalWaypointHeadingParam().getWaypointHeadingAngle()) : null);
-        waypointHeadingReq.setWaypointPoiPoint(StringUtils.isNotBlank(folder.getGlobalWaypointHeadingParam().getWaypointPoiPoint()) ? folder.getGlobalWaypointHeadingParam().getWaypointPoiPoint() : null);
-        kmlParams.setWaypointHeadingReq(waypointHeadingReq);
+        KmlGlobalWaypointHeadingParam globalWaypointHeadingParam = folder.getGlobalWaypointHeadingParam();
+        if (ObjectUtil.isNotEmpty(globalWaypointHeadingParam)) {
+            WaypointHeadingReq waypointHeadingReq = new WaypointHeadingReq();
+            waypointHeadingReq.setWaypointHeadingMode(globalWaypointHeadingParam.getWaypointHeadingMode());
+            waypointHeadingReq.setWaypointHeadingAngle(Double.valueOf(globalWaypointHeadingParam.getWaypointHeadingAngle()));
+            waypointHeadingReq.setWaypointPoiPoint(globalWaypointHeadingParam.getWaypointPoiPoint());
+            kmlParams.setWaypointHeadingReq(waypointHeadingReq);
+
+        }
 
         WaypointTurnReq waypointTurnReq = new WaypointTurnReq();
         waypointTurnReq.setWaypointTurnMode(folder.getGlobalWaypointTurnMode());
@@ -109,21 +109,22 @@ public class UavRouteServiceImpl implements UavRouteService {
     }
 
     @Override
-    public KmlInfo parseKmz(String fileUrl) throws IOException {
-        File file = FileUtils.downloadUrlToTempFile(fileUrl);
+    public KmzInfoVO parseKmz(String fileUrl) throws IOException {
+        KmzInfoVO kmzInfoVO = new KmzInfoVO();
+//        File file = FileUtils.downloadUrlToTempFile(fileUrl);
+        File file = FileUtil.file("/Users/songjian/Project/IdeaProjects/dj-uav/file/kmz/航线kmz文件.kmz");
+
         try (ArchiveInputStream archiveInputStream = new ZipArchiveInputStream(FileUtil.getInputStream(file))) {
             ArchiveEntry entry;
-            KmlInfo kmlInfo = new KmlInfo();
-            KmlInfo wpmlInfo = new KmlInfo();
             while (!Objects.isNull(entry = archiveInputStream.getNextEntry())) {
                 String name = entry.getName();
                 if (name.toLowerCase().endsWith(".kml")) {
-                    kmlInfo = RouteFileUtils.parseKml(archiveInputStream);
+                    kmzInfoVO.setKmlInfo(RouteFileUtils.parseKml(archiveInputStream));
                 } else if (name.toLowerCase().endsWith(".wpml")) {
-                    wpmlInfo = RouteFileUtils.parseKml(archiveInputStream);
+                    kmzInfoVO.setWpmlInfo(RouteFileUtils.parseKml(archiveInputStream));
                 }
             }
-            return kmlInfo;
+            return kmzInfoVO;
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -48,12 +48,15 @@
 * util/RouteFileUtils：生成和解析 KMZ 航线文件的代码都在这个工具类里
 
 ## 接口参数示例
+
+### 航点类型
+
 <details>
   <summary>生成航线 KMZ 文件</summary>
-  
+
 ```json
 {
-  "templateType": "mapping2d",
+  "templateType": "waypoint",
   "takeOffRefPoint": "22.581115,113.940282,16.035026",
   "droneType": 91,
   "subDroneType": 1,
@@ -71,38 +74,6 @@
     "waypointTurnMode": "toPointAndStopWithDiscontinuityCurvature"
   },
   "gimbalPitchMode": "usePointSetting",
-  "mappingTypeReq": {
-    "collectionMethod": "camera",
-    "lensType": "ortho",
-    "overlapH": 80,
-    "overlapW": 70,
-    "elevationOptimizeEnable": 1,
-    "shootType": "time",
-    "direction": 89,
-    "margin": 0,
-    "coordinates": [
-      {
-        "longitude": 113.940334790292,
-        "latitude": 22.5798256945836,
-        "height": 0
-      },
-      {
-        "longitude": 113.943015351291,
-        "latitude": 22.5798490554135,
-        "height": 0
-      },
-      {
-        "longitude": 113.942911397786,
-        "latitude": 22.5816299613237,
-        "height": 0
-      },
-      {
-        "longitude": 113.940344598963,
-        "latitude": 22.5816387784883,
-        "height": 0
-      }
-    ]
-  },
   "startActionList": [
     {
       "actionIndex": 0,
@@ -110,7 +81,7 @@
     },
     {
       "actionIndex": 1,
-      "hoverTime": 0.5
+      "hoverTime": 30
     }
   ],
   "routePointList": [
@@ -118,25 +89,69 @@
       "routePointIndex": 0,
       "longitude": 113.940343144377,
       "latitude": 22.5813699888658,
-      "timeInterval": 2,
-      "endIntervalRouteIndex": 10,
-      "actions": [
+      "actionGroupList": [
         {
-          "actionIndex": 0,
-          "takePhotoType": 0,
-          "useGlobalImageFormat": 1
+          "actionGroupId": 0,
+          "actionGroupStartIndex": 0,
+          "actionGroupEndIndex": 0,
+          "actionTriggerType": "reachPoint",
+          "actions": [
+            {
+              "actionIndex": 0,
+              "takePhotoType": 0,
+              "useGlobalImageFormat": 1
+            },
+            {
+              "actionIndex": 1,
+              "hoverTime": 20
+            }
+          ]
         }
       ]
     },
     {
       "routePointIndex": 1,
       "longitude": 113.942924142576,
-      "latitude": 22.5814115656784
+      "latitude": 22.5814115656784,
+      "actionGroupList": [
+        {
+          "actionGroupId": 1,
+          "actionGroupStartIndex": 1,
+          "actionGroupEndIndex": 1,
+          "actionTriggerType": "reachPoint",
+          "actions": [
+            {
+              "actionIndex": 0,
+              "hoverTime": 20
+            }
+          ]
+        }
+      ]
     },
     {
       "routePointIndex": 2,
       "longitude": 113.942943025065,
-      "latitude": 22.5810880647388
+      "latitude": 22.5810880647388,
+      "actionGroupList": [
+        {
+          "actionGroupId": 2,
+          "actionGroupStartIndex": 2,
+          "actionGroupEndIndex": 2,
+          "actionTriggerType": "reachPoint",
+          "actions": [
+            {
+              "actionIndex": 0,
+              "takePhotoType": 1,
+              "useGlobalImageFormat": 1
+            },
+            {
+              "actionIndex": 1,
+              "startRecord": true,
+              "useGlobalImageFormat": 1
+            }
+          ]
+        }
+      ]
     },
     {
       "routePointIndex": 3,
@@ -146,7 +161,26 @@
     {
       "routePointIndex": 4,
       "longitude": 113.940339640707,
-      "latitude": 22.5807223222765
+      "latitude": 22.5807223222765,
+      "actionGroupList": [
+        {
+          "actionGroupId": 2,
+          "actionGroupStartIndex": 2,
+          "actionGroupEndIndex": 2,
+          "actionTriggerType": "reachPoint",
+          "actions": [
+            {
+              "actionIndex": 0,
+              "takePhotoType": 1,
+              "useGlobalImageFormat": 1
+            },
+            {
+              "actionIndex": 1,
+              "stopRecord": true
+            }
+          ]
+        }
+      ]
     },
     {
       "routePointIndex": 5,
@@ -186,13 +220,15 @@
   ]
 }
 
-
 ```
+
 </details>
 
+### 建图航拍
+
 <details>
-  <summary>编辑航线 KMZ 文件</summary>
-  
+  <summary>生成航线 KMZ 文件</summary>
+
 ```json
 {
   "templateType": "mapping2d",
@@ -206,9 +242,6 @@
   "exitOnRcLostAction": "goBack",
   "globalHeight": 100,
   "autoFlightSpeed": 10,
-  "waypointHeadingReq": {
-    "waypointHeadingMode": "followWayline"
-  },
   "waypointTurnReq": {
     "waypointTurnMode": "toPointAndStopWithDiscontinuityCurvature"
   },
@@ -260,74 +293,123 @@
       "routePointIndex": 0,
       "longitude": 113.940343144377,
       "latitude": 22.5813699888658,
-      "timeInterval": 2,
-      "endIntervalRouteIndex": 10,
-      "actions": [
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      },
+      "actionGroupList": [
         {
-          "actionIndex": 0,
-          "takePhotoType": 0,
-          "useGlobalImageFormat": 1
+          "actionGroupId": 0,
+          "actionGroupStartIndex": 0,
+          "actionGroupEndIndex": 11,
+          "actionTriggerType": "betweenAdjacentPoints",
+          "actions": [
+            {
+              "actionIndex": 0,
+              "takePhotoType": 0,
+              "useGlobalImageFormat": 1
+            },
+            {
+              "actionIndex": 1,
+              "hoverTime": 20
+            }
+          ]
         }
       ]
     },
     {
       "routePointIndex": 1,
       "longitude": 113.942924142576,
-      "latitude": 22.5814115656784
+      "latitude": 22.5814115656784,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 2,
       "longitude": 113.942943025065,
-      "latitude": 22.5810880647388
+      "latitude": 22.5810880647388,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 3,
       "longitude": 113.940341392538,
-      "latitude": 22.5810461555712
+      "latitude": 22.5810461555712,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 4,
       "longitude": 113.940339640707,
-      "latitude": 22.5807223222765
+      "latitude": 22.5807223222765,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 5,
       "longitude": 113.942961907465,
-      "latitude": 22.5807645637969
+      "latitude": 22.5807645637969,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 6,
       "longitude": 113.942980789776,
-      "latitude": 22.5804410628529
+      "latitude": 22.5804410628529,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 7,
       "longitude": 113.940337888885,
-      "latitude": 22.5803984889819
+      "latitude": 22.5803984889819,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 8,
       "longitude": 113.940336137071,
-      "latitude": 22.5800746556873
+      "latitude": 22.5800746556873,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 9,
       "longitude": 113.942997724328,
-      "latitude": 22.5801175305482
+      "latitude": 22.5801175305482,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 10,
       "longitude": 113.942999671999,
-      "latitude": 22.5801175619067
+      "latitude": 22.5801175619067,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     },
     {
       "routePointIndex": 11,
       "longitude": 113.941647829558,
-      "latitude": 22.580729324342
+      "latitude": 22.580729324342,
+      "waypointHeadingReq": {
+        "waypointHeadingMode": "followWayline"
+      }
     }
   ]
 }
+
+
 ```
+
 </details>
 
 ## Star History

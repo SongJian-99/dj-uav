@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @XStreamAlias("Placemark")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -52,7 +54,7 @@ public class KmlPlacemark {
     private String gimbalPitchAngle;
 
     @XStreamAlias("wpml:actionGroup")
-    private KmlActionGroup actionGroup;
+    private List<KmlActionGroup> actionGroup;
 
     // 下面 wpml 文件使用
     @XStreamAlias("wpml:executeHeight")
@@ -93,10 +95,16 @@ public class KmlPlacemark {
     private KmlPolygon polygon;
 
     @XStreamAlias("wpml:mappingHeadingParam")
-    private KmlActionGroup mappingHeadingParam;
+    private KmlMappingHeadingParam mappingHeadingParam;
 
     @XStreamAlias("wpml:gimbalPitchMode")
     private String gimbalPitchMode;
+
+    @XStreamAlias("wpml:quickOrthoMappingEnable")
+    private String quickOrthoMappingEnable;
+
+    @XStreamAlias("wpml:quickOrthoMappingEnable")
+    private String quickOrthoMappingPitch;
 
     // 倾斜摄影模板元素
     @XStreamAlias("wpml:inclinedGimbalPitch")
@@ -129,5 +137,6 @@ public class KmlPlacemark {
 
     @XStreamAlias("LineString")
     private KmlLineString lineString;
+
 
 }
