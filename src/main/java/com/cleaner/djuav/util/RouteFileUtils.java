@@ -51,6 +51,7 @@ public class RouteFileUtils {
         xStream.autodetectAnnotations(true);
         xStream.ignoreUnknownElements();
         xStream.addImplicitCollection(KmlActionGroup.class, "action");
+        xStream.addImplicitCollection(KmlPlacemark.class, "actionGroup");
         return (KmlInfo) xStream.fromXML(inputStream);
     }
 
@@ -79,6 +80,7 @@ public class RouteFileUtils {
         XStream xStream = new XStream(new DomDriver());
         xStream.processAnnotations(KmlInfo.class);
         xStream.addImplicitCollection(KmlActionGroup.class, "action");
+        xStream.addImplicitCollection(KmlPlacemark.class, "actionGroup");
 
         String kml = XML_HEADER + xStream.toXML(kmlInfo);
         String wpml = XML_HEADER + xStream.toXML(wpmlInfo);

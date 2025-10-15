@@ -9,6 +9,7 @@ import com.cleaner.djuav.domain.*;
 import com.cleaner.djuav.domain.kml.*;
 import com.cleaner.djuav.enums.kml.ExitOnRCLostEnums;
 import com.cleaner.djuav.service.UavRouteService;
+import com.cleaner.djuav.util.FileUtils;
 import com.cleaner.djuav.util.RouteFileUtils;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -33,7 +34,7 @@ public class UavRouteServiceImpl implements UavRouteService {
     @Override
     public void updateKmz(UavRouteReq uavRouteReq) {
         // TODO 替换本地文件路径！！！
-        File file = FileUtil.file("/Users/songjian/Project/IdeaProjects/dj-uav/file/kmz/航线kmz文件.kmz");
+        File file = FileUtil.file("/Users/Cleaner/Project/IdeaProjects/dj-uav/file/kmz/航线kmz文件.kmz");
         try (ArchiveInputStream archiveInputStream = new ZipArchiveInputStream(FileUtil.getInputStream(file))) {
             ArchiveEntry entry;
             KmlInfo kmlInfo = new KmlInfo();
@@ -111,9 +112,7 @@ public class UavRouteServiceImpl implements UavRouteService {
     @Override
     public KmzInfoVO parseKmz(String fileUrl) throws IOException {
         KmzInfoVO kmzInfoVO = new KmzInfoVO();
-//        File file = FileUtils.downloadUrlToTempFile(fileUrl);
-        File file = FileUtil.file("/Users/songjian/Project/IdeaProjects/dj-uav/file/kmz/航线kmz文件.kmz");
-
+        File file = FileUtils.downloadUrlToTempFile(fileUrl);
         try (ArchiveInputStream archiveInputStream = new ZipArchiveInputStream(FileUtil.getInputStream(file))) {
             ArchiveEntry entry;
             while (!Objects.isNull(entry = archiveInputStream.getNextEntry())) {

@@ -88,7 +88,7 @@ public class KmlPlacemark {
     @XStreamAlias("wpml:overlap")
     private KmlOverlap overlap;
 
-    @XStreamAlias("wpml:ovefacadeWaylineEnablerlap")
+    @XStreamAlias("wpml:facadeWaylineEnable")
     private String facadeWaylineEnable;
 
     @XStreamAlias("Polygon")
