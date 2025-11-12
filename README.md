@@ -1,6 +1,6 @@
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&pause=1000&color=F70E34&width=435&lines=%E5%A6%82%E6%9E%9C%E8%AF%A5%E9%A1%B9%E7%9B%AE%E5%AF%B9%E4%BD%A0%E6%9C%89%E5%B8%AE%E5%8A%A9%E7%9A%84%E8%AF%9D%EF%BC%8C%E6%AC%A2%E8%BF%8E%E7%82%B9%E4%B8%AA+star+%EF%BC%81)](https://git.io/typing-svg)
 
-![2071760001310_ pic](https://github.com/user-attachments/assets/9939e957-4f8d-4097-99cc-8f8e7d267bbe)
+![b9733034235b60ea5c872df50e9b9ed5](https://github.com/user-attachments/assets/cce0924a-dd85-4054-98f6-c2f8ccb547fc)
 
 ## 实现效果
 
